@@ -236,13 +236,20 @@ export default function Signup() {
 
         {/* Class Level */}
         <div className='my-4'>
-          <input className='border-2 p-2 rounded-md w-full' type="text" name="classLevel" placeholder='Class Level'
+          <select name="classLevel" className="border-2 p-2 rounded-md w-full"
             value={registerForm.values.classLevel}
             onBlur={registerForm.handleBlur}
-            onChange={registerForm.handleChange}/>
+            onChange={registerForm.handleChange} >
+            <option value="" disabled selected>Select Class Level 👇</option>
+            <option value="Grade 1 Secondary">Grade 1 Secondary</option>
+            <option value="Grade 2 Secondary">Grade 2 Secondary</option>
+            <option value="Grade 3 Secondary">Grade 3 Secondary</option>
+          </select>
+
           {registerForm.touched.classLevel && registerForm.errors.classLevel && (
             <p className="text-red-500 text-sm">{registerForm.errors.classLevel}</p>)}
         </div>
+
 
         {/* Submit Button */}
         {loading ? (
@@ -258,7 +265,3 @@ export default function Signup() {
     </div>
   )
 }
-
-// Grade 1 Secondary
-// Grade 2 Secondary
-// Grade 3 Secondary

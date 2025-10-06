@@ -1,17 +1,18 @@
 
 import axios from 'axios'
-import React, { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { TokenContext } from '../Context/TokenContext';
 
 export default function Login() {
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate()
+  const { token, setToken } = useContext(TokenContext)
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -26,14 +27,15 @@ export default function Login() {
     try {
       setLoading(true);
       const res = await axios.post(`https://edu-master-psi.vercel.app/auth/login`, values);
-      console.log("✅ Success:", res.data);
       setMessage("✅ Success Login ");
+      localStorage.setItem('token', res.data.token);
+      setToken(res.data.token);
       registerForm.resetForm();
-      toast.success('Success')
+      toast.success('Welcome ')
       navigate('/')
     } catch (err) {
-      console.error("❌ Error:", err.response?.data || err.message);
-      setMessage("❌ Error occurred during login");
+      console.error(err.response?.data.message);
+      setMessage(err.response?.data.message);
     } finally {
       setLoading(false);
     }
@@ -56,7 +58,7 @@ export default function Login() {
 
         {/* Email */}
         <div className='my-4'>
-          <input className='border-2 p-2 rounded-md w-full' type="email" name="email" placeholder='Email'
+          <input autoComplete='on' className='border-2 p-2 rounded-md w-full' type="email" name="email" placeholder='Email'
             value={registerForm.values.email}
             onBlur={registerForm.handleBlur}
             onChange={registerForm.handleChange} />
@@ -66,7 +68,7 @@ export default function Login() {
 
         {/* Password */}
         <div className='my-4'>
-          <input className='border-2 p-2 rounded-md w-full' type="password" name="password" placeholder='Password'
+          <input autoComplete='on' className='border-2 p-2 rounded-md w-full' type="password" name="password" placeholder='Password'
             value={registerForm.values.password}
             onBlur={registerForm.handleBlur}
             onChange={registerForm.handleChange} />
@@ -79,8 +81,10 @@ export default function Login() {
           <button disabled className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 cursor-wait disabled:opacity-50">Loading...</button>) 
           : (<button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 cursor-pointer disabled:opacity-50">Login</button>
         )}
-        <p> Go to <Link to="/Signup" className='text-blue-500 font-bold underline'>Signup</Link></p>
       </form>
+      
+      <p> Go to <Link to="/Signup" className='text-blue-500 font-bold underline'>Signup</Link></p>
+      <p><Link to="/ForgetPassword" className='text-red-400 font-bold underline'>forget your password?</Link></p>
 
       {message && (
         <p className={`mt-4 text-center font-semibold  ${message.includes("Success") ? "text-green-600" : "text-red-600"}`}> {message} </p>

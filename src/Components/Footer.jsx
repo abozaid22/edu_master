@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom'
 export default function Footer() {
   return (
     <>
-      <h1 className='bg-blue-300 text-center'>Footer</h1>
     <footer>
-      <div className='grid grid-cols-2 md:grid-cols-4  gap-4'>
+      <div className='grid grid-cols-2 md:grid-cols-4 gap-4 p-5'>
         <div className='p-2'>
           <h2 className='font-bold uppercase'>Company</h2>
           <ul className='text-gray-600 space-y-4 mt-4 font-medium'>
@@ -43,13 +42,9 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-    </footer>
 
-<footer class="bg-white dark:bg-gray-900">
-    <div class="mx-auto w-full max-w-screen-xl">
-    <div class="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
-        <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2025 <a href="https://flowbite.com/">Flowbite™</a>. All Rights Reserved.
-        </span>
+      {/* <div class="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-between">
+        <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2025 <a href="https://flowbite.com/">Flowbite™</a>. All Rights Reserved.</span>
         <div class="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">
             <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white">
                   <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
@@ -82,9 +77,11 @@ export default function Footer() {
                   <span class="sr-only">Dribbble account</span>
               </a>
         </div>
-      </div>
-    </div>
-</footer>
+      </div> */}
+
+
+    </footer>
+
 
     </>
   )

@@ -12,20 +12,21 @@ import { TokenContext } from './Context/TokenContext';
 import Courses from './Pages/Courses';
 import ProtectedRoute from './Components/ProtectedRoute';
 import ProtectedRouteGuard from './Components/ProtectedRouteGuard';
+import Profile from './Pages/Profile';
 
 function App() {
-  const { token , setToken } = useContext(TokenContext)
+  const { setToken } = useContext(TokenContext)
   useEffect(() => {
     {localStorage.getItem('token') ? setToken(localStorage.getItem('token')) : setToken(null)}
   }, [])
   
-  {token && console.log(token)}
 
   const router = createBrowserRouter([
     {path: "/", element:<Layout /> , children:[
       {index:true, element:<ProtectedRoute><Home /></ProtectedRoute>},
       // {path:'Home', element:<ProtectedRoute><Home /></ProtectedRoute>},
       {path:'Courses',element:<ProtectedRoute><Courses /></ProtectedRoute>},
+      {path:'Profile',element:<ProtectedRoute><Profile /></ProtectedRoute>},
 
       {path: "ForgetPassword", element:<ProtectedRouteGuard><ForgetPassword /></ProtectedRouteGuard>},
       {path:'OtpPassword',element:<ProtectedRouteGuard><OtpPassword /></ProtectedRouteGuard>},

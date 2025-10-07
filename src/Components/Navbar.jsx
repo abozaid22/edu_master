@@ -56,6 +56,7 @@ export default function Navbar() {
 
                   <div className="absolute mt-2 w-60 bg-white border border-sky-200 rounded-lg shadow-lg p-3 space-y-2 z-50 left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0 ">
                     <button onClick={() => setDivProfile(false)} className="absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold cursor-pointer">Close</button>
+                    <button onClick={() => (navigate('/Profile'), setDivProfile(false) )} className="text-green-500 hover:text-green-700 font-bold cursor-pointer">Profile</button>
                     <p className="font-semibold text-gray-800">Username</p>
                     <p className="text-sm text-gray-500">Email: example@mail.com</p>
                     <button onClick={handleLogout} className="text-red-500 hover:text-red-700 font-semibold cursor-pointer">Logout</button>

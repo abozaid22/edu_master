@@ -5,17 +5,18 @@ import LoaderSpinner from '../Components/LoaderSpinner';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { TokenContext } from '../Context/TokenContext';
+import UpdatePassword from '../Components/UpdatePassword';
 
 export default function Profile() {
   const [userData, setUserData] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const [newPassword, setNewPassword] = useState(false);
   const [openDivDelete, setOpenDivDelete] = useState(false);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const { setToken } = useContext(TokenContext);
   
-    // get profile
+  // get profile
   async function getPro() {
     setLoading(true);
     try {
@@ -79,8 +80,17 @@ export default function Profile() {
             <h3 className="text-lg font-bold text-sky-700 border-b pb-2">Account Settings</h3>
             {/* Update Profile */}
             <button className="cursor-pointer w-full py-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-lg transition">Update Profile</button>
+           
             {/* Change Password */}
-            <button className="cursor-pointer w-full py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition">Change Password</button>
+            <button onClick={()=> setNewPassword(!newPassword)} className="cursor-pointer w-full py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition">Change Password</button>
+            {newPassword&&<div className='z-40 fixed inset-0 w-full h-screen bg-black/80 flex justify-center items-center'>
+              <div>
+              <button onClick={()=> setNewPassword(false)} className='text-red-500 mb-3 cursor-pointer hover:bg-red-500 hover:text-white border-2 pb-1 transition rounded-xl w-full font-bold text-xl'>class</button>
+                <UpdatePassword />
+              </div>
+              </div>  }
+
+
             {/* Delete Account */}
             <button onClick={() => setOpenDivDelete(!openDivDelete)} className="cursor-pointer w-full py-2 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg transition">Delete Account</button>
             <div className={`transition ${openDivDelete ? "block" : "hidden"}`}>

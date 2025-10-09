@@ -12,7 +12,7 @@ export default function Login() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
-  const { token, setToken } = useContext(TokenContext)
+  const { setToken } = useContext(TokenContext)
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -34,7 +34,6 @@ export default function Login() {
       toast.success('Welcome ')
       navigate('/')
     } catch (err) {
-      console.error(err.response?.data.message);
       setMessage(err.response?.data.message);
     } finally {
       setLoading(false);
@@ -65,6 +64,7 @@ export default function Login() {
           {registerForm.touched.email && registerForm.errors.email && (
             <p className="text-red-500 text-sm">{registerForm.errors.email}</p>)}
         </div>
+        {message.includes("email") && (<p className="my-2 font-bold text-xl tracking-wider text-red-600">Email is wrong</p>)}
 
         {/* Password */}
         <div className='my-4'>
@@ -75,6 +75,8 @@ export default function Login() {
           {registerForm.touched.password && registerForm.errors.password && (
             <p className="text-red-500 text-sm">{registerForm.errors.password}</p> )}
         </div>
+        {(message.includes("password") || message.includes("invalid credentials")) && (
+          <p className="my-2 font-bold text-xl tracking-wider text-red-600">Password is wrong</p>)}
 
         {/* Submit Button */}
         {loading ? (
@@ -83,11 +85,14 @@ export default function Login() {
         )}
       </form>
       
-      <p> Go to <Link to="/Signup" className='text-blue-500 font-bold underline'>Signup</Link></p>
+      <p> Don't have an account? <Link to="/Signup" className='text-blue-500 font-bold underline tracking-wider'>Create an account</Link></p>
       <p><Link to="/ForgetPassword" className='text-red-400 font-bold underline'>forget your password?</Link></p>
 
-      {message && (
-        <p className={`mt-4 text-center font-semibold  ${message.includes("Success") ? "text-green-600" : "text-red-600"}`}> {message} </p>
+      {message && (<>
+        {message.includes("timed out") && (<p className="text-red-600 font-bold text-center mt-4">Server took too long to respond. Please try again later.</p>)}
+        {message.includes("user not found") && (<p className="my-2 font-bold text-center text-xl tracking-wider text-red-600">user not found</p>)}
+        {message.includes("user not verified") && (<p className="my-2 font-bold text-center text-xl tracking-wider text-red-600">user not verified</p>)}        
+      </>
       )}
     </div>
   )

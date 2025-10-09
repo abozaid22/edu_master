@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,11 +10,11 @@ export default function Signup() {
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     fullName: Yup.string()
+      .matches(/^[A-Za-z\s]+$/, "Name must contain only letters")
       .min(3, "Name must be at least 3 characters")
       .max(30, "Name must be at most 30 characters")
       .required("Name is Required"),
@@ -38,13 +38,11 @@ export default function Signup() {
       setLoading(true);
       const res = await axios.post(`https://edu-master-psi.vercel.app/auth/signup`, values);
       setMessage("✅ Success Signup ");
-      registerForm.resetForm();
       toast.success('Successfully created!');
       toast.success(res.data.message);
+      registerForm.resetForm();
       navigate('/Login');
     } catch (err) {
-      console.error("❌ Error:", err.response?.data || err.message);
-      console.error("❌ Error:", err.response?.data?.message);
       setMessage(err.response?.data?.message);
     } finally {
       setLoading(false);
@@ -88,6 +86,8 @@ export default function Signup() {
           {registerForm.touched.email && registerForm.errors.email && (
             <p className="text-red-500 text-sm">{registerForm.errors.email}</p>)}
         </div>
+      {message.includes("email")&&<p className="my-2 font-bold text-center text-xl tracking-wider text-red-600">must be a valid email</p>}
+
 
         {/* Password */}
         <div className='my-4'>
@@ -108,6 +108,8 @@ export default function Signup() {
           {registerForm.touched.cpassword && registerForm.errors.cpassword && (
             <p className="text-red-500 text-sm">{registerForm.errors.cpassword}</p> )}
         </div>
+      {message.includes("password")&&<p className="my-2 font-bold text-center text-xl tracking-wider text-red-600">  Use at least one capital letter, number, and symbol ( <span className="font-medium">Aa1234567@</span>)</p>}
+      
 
         {/* Phone Number */}
         <div className='my-4'>
@@ -141,12 +143,10 @@ export default function Signup() {
           <button disabled className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 cursor-wait disabled:opacity-50">Loading...</button>) 
           : (<button type="submit" className="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 cursor-pointer disabled:opacity-50">Signup</button>
         )}
-        <p> Go to <Link to="/Login" className='text-blue-500 font-bold underline'>Login</Link></p>
+        <p> Already have an account? <Link to="/Login" className='text-blue-500 font-bold underline tracking-wider'>Log in here</Link></p>
       </form>
 
-      {message && (
-        <p className="mt-4 text-center font-semibold">{message}</p>
-      )}
+      {message.includes("user already exist")&&<p className="my-2 font-bold text-center text-xl tracking-wider text-red-600">user or phone already exist</p>}
     </div>
   )
 }

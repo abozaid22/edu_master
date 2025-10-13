@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { TokenContext } from '../Context/TokenContext';
 import UpdatePassword from '../Components/UpdatePassword';
+import UpdateUser from './../Components/UpdateUser';
 
 export default function Profile() {
   const [userData, setUserData] = useState('');
   const [loading, setLoading] = useState(false);
+  const [UpdateProfile, setUpdateProfile] = useState(false);
   const [newPassword, setNewPassword] = useState(false);
   const [openDivDelete, setOpenDivDelete] = useState(false);
   const token = localStorage.getItem('token');
@@ -79,15 +81,25 @@ export default function Profile() {
         <div className="bg-white shadow-lg rounded-xl p-6 sm:w-1/2 mx-auto border border-gray-200 mt-2 sm:mt-4 space-y-4">
             <h3 className="text-lg font-bold text-sky-700 border-b pb-2">Account Settings</h3>
             {/* Update Profile */}
-            <button className="cursor-pointer w-full py-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-lg transition">Update Profile</button>
-           
+            <button onClick={() => setUpdateProfile(!UpdateProfile)} className="cursor-pointer w-full py-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-lg transition">Update Profile</button>
+            <div className={`transition ${UpdateProfile ? "block" : "hidden"}`}>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta velit facilis at sint, unde molestiae ipsa commodi nostrum provident repellat minima dolorem amet impedit nulla veritatis debitis dolor atque odit?</p>
+            </div>
+            {UpdateProfile && <div className='z-40 fixed inset-0 w-full h-screen bg-black/80 flex justify-center items-center'>
+                <div>
+                  <button onClick={() => setUpdateProfile(false)} className='text-red-500 mb-3 cursor-pointer hover:bg-red-500 hover:text-white border-2 pb-1 transition rounded-xl w-full font-bold text-xl'>class</button>
+                  <UpdateUser/>
+                </div>
+              </div>  }
+
+
             {/* Change Password */}
             <button onClick={()=> setNewPassword(!newPassword)} className="cursor-pointer w-full py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition">Change Password</button>
             {newPassword&&<div className='z-40 fixed inset-0 w-full h-screen bg-black/80 flex justify-center items-center'>
-              <div>
-              <button onClick={()=> setNewPassword(false)} className='text-red-500 mb-3 cursor-pointer hover:bg-red-500 hover:text-white border-2 pb-1 transition rounded-xl w-full font-bold text-xl'>class</button>
-                <UpdatePassword />
-              </div>
+                <div>
+                  <button onClick={()=> setNewPassword(false)} className='text-red-500 mb-3 cursor-pointer hover:bg-red-500 hover:text-white border-2 pb-1 transition rounded-xl w-full font-bold text-xl'>class</button>
+                  <UpdatePassword />
+                </div>
               </div>  }
 
 

@@ -43,12 +43,13 @@ export default function Navbar() {
               {divProfile && (
                 <>
                   <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setDivProfile(false)}></div>
-                  <div className="absolute mt-2 w-60 bg-white border border-sky-200 rounded-lg shadow-lg p-3 space-y-2 z-50 left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0 ">
-                    <button onClick={() => setDivProfile(false)} className="absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold cursor-pointer">Close</button>
-                    <button onClick={handleProfileClick} className="text-green-500 hover:text-green-700 font-bold cursor-pointer">Profile</button>
-                    <p className="font-semibold text-gray-800">Username</p>
-                    <p className="text-sm text-gray-500">Email: example@mail.com</p>
-                    <button onClick={handleLogout} className="text-red-500 hover:text-red-700 font-semibold cursor-pointer">Logout</button>
+                  <div className="absolute mt-2 w-64 bg-white rounded-3xl shadow-xl p-6 space-y-4 border border-gray-100 z-50 left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0">
+                    <div className="flex justify-between items-center border-b pb-3">
+                      <h3 className="font-bold text-gray-700">My Account</h3>
+                      <button type="button" onClick={() => setDivProfile(false)} className="hover:scale-110 transition-transform duration-200 text-gray-700 hover:bg-gray-700 rounded-full p-0.5 cursor-pointer">✖</button>
+                    </div>
+                    <button type="button" onClick={handleProfileClick} className="block w-fit cursor-pointer text-left text-gray-700 hover:text-green-600 font-medium">👤 Profile</button>
+                    <button type="button" onClick={handleLogout} className="block w-fit cursor-pointer text-left text-gray-700 hover:text-red-600 font-medium">🚪 Logout</button>
                   </div>
                 </>
               )}
